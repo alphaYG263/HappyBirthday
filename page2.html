@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HBD!</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Balloon float animation */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 50px;
+      height: 70px;
+      animation: floatUp 5s linear forwards;
+      pointer-events: none; /* Balloons won't block button clicks */
+    }
+
+    /* Ensure buttons are always clickable */
+    #allbuttons {
+      position: relative;
+      z-index: 50; /* Keeps buttons above other elements */
+    }
+
+    #balloonContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 30; /* Lower than buttons */
+    }
+
+    /* Cake animation */
+    @keyframes cakeRise {
+      0% {
+        bottom: -200px; /* Start position (off-screen) */
+        opacity: 0;
+      }
+      100% {
+        bottom: 17%; /* Middle of screen */
+        opacity: 1;
+      }
+    }
+
+    #cakeimage {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -200px; /* Initially hidden */
+      width: 200px;
+      height: auto;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body class="bg-cover bg-center h-screen flex flex-col items-center" style="background-image: url('Resources/treebg.jpg');">
+  <div>
+    <div id="allbuttons">
+      <div id="musicbutton">
+        <button class="mt-10 px-14 py-2 bg-pink-500 text-white rounded-3xl hover:bg-pink-700" id="music">Play Music</button>
+      </div>
+      
+      <div id="decoratebutton" style="display: none;">
+        <button class="mt-10 px-14 py-2 bg-pink-500 text-white rounded-3xl hover:bg-pink-700" id="decorate">Decorate</button>
+      </div>
+      
+      <div id="flyballoonsbutton" style="display: none;">
+        <button class="mt-10 px-14 py-2 bg-pink-500 text-white rounded-3xl hover:bg-pink-700" id="balloons">Fly balloons</button>
+      </div>
+
+      <div id="cakecutbutton" style="display: none;">
+        <button class="mt-10 px-14 py-2 bg-pink-500 text-white rounded-3xl hover:bg-pink-700" id="cakecut">Let's cut the cake ji!</button>
+      </div>
+      
+      <div id="smalmesbutton" style="display: none;">
+        <a href="page3.html">
+          <button class="mt-10 px-14 py-2 bg-pink-500 text-white rounded-3xl hover:bg-pink-700" id="smalmes">I have a small message for you &lt;3 </button>
+        </a>
+      </div>
+    </div>
+
+    <div id="hbimg" class="mt-[-130px] absolute z-10 translate-x-[-145px]" style="display: none;">
+      <img src="Resources/hpbdimage.png"> 
+    </div>
+
+    <!-- Cake Image (Initially hidden at bottom) -->
+    <img src="Resources/cakepfp.png" id="cakeimage">
+
+    <!-- Balloon container covering the whole screen -->
+    <div id="balloonContainer"></div>
+  </div>
+
+  <script>
+    const musicbutton = document.getElementById('music');
+    const decoratebutton = document.getElementById('decorate');
+    const balloonsbutton = document.getElementById('balloons');
+    const balloonContainer = document.getElementById('balloonContainer');
+    const cakecut = document.getElementById('cakecut');
+    const cakeimage = document.getElementById('cakeimage');
+
+    // Play Music button functionality
+    musicbutton.addEventListener('click', function() {
+      const audio = new Audio('Resources/Mitwa.mp3');
+      audio.play();
+      document.getElementById('musicbutton').style.display = 'none';
+      document.getElementById('decoratebutton').style.display = 'block';
+    });
+
+    // Decorate button functionality
+    decoratebutton.addEventListener('click', function() {
+      document.getElementById('decoratebutton').style.display = 'none';
+      document.getElementById('flyballoonsbutton').style.display = 'block';
+      document.getElementById('hbimg').style.display = 'block';
+    });
+
+    // Balloons button functionality
+    balloonsbutton.addEventListener('click', function() {
+      document.getElementById('flyballoonsbutton').style.display = 'none';
+      document.getElementById('cakecutbutton').style.display = 'block';
+
+      let balloonInterval = setInterval(function() {
+        const balloon = document.createElement('img');
+        balloon.src = 'Resources/balloon.png';
+        balloon.classList.add('balloon');
+        
+        // Set random horizontal position
+        balloon.style.left = `${Math.random() * 90}vw`;
+
+        // Append to container
+        balloonContainer.appendChild(balloon);
+
+        // Remove after animation
+        setTimeout(() => {
+          balloon.remove();
+        }, 5000);
+      }, 100);
+
+      // Stop balloon creation after 5 seconds
+      setTimeout(() => {
+        clearInterval(balloonInterval);
+      }, 5000);
+    });
+
+    // Cake cut button functionality
+    cakecut.addEventListener('click', function() {
+      cakeimage.style.animation = "cakeRise 2s ease-out forwards";
+      document.getElementById('cakecutbutton').style.display = 'none';
+      document.getElementById('smalmesbutton').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

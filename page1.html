@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <!-- CSS for the custom animation -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-cover bg-center h-screen flex flex-col items-center justify-center relative" style="background-image: url('Resources/heartbg.gif');">
+  <div id="message" class="bg-white w-[60%] h-[200px] flex items-center justify-center mx-auto">
+    <div class="text-center text-3xl font-bold">
+      I want to make something as you became special to me in the recent days from the day I met you!
+    </div>
+  </div>  
+
+  <div id="buttons" class="pt-8" style="display: none;">
+    <button id="yesButton" class="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-700">Yes</button>
+    <a href="page2.html">
+      <button id="noButton" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 ml-4">No</button>
+    </a>
+  </div>
+
+  <script>
+    // Wait for 3 seconds to change the text and display buttons
+    setTimeout(function() {
+      // Change the text inside the div
+      document.querySelector('#message .text-center').innerHTML = "Do you wanna see what I made? 👀";
+
+      // Show the new buttons
+      document.getElementById('buttons').style.display = 'block';
+    }, 3000); // 3000 milliseconds = 3 seconds
+    function changepage(){
+      window.location.href = "page2.html"; // Replace with the actual page URL
+    }
+    // Function to move the "No" button to a random position
+    function moveButtonRandomly() {
+      const button = document.getElementById('noButton');
+      const bodyWidth = document.body.clientWidth;
+      const bodyHeight = document.body.clientHeight;
+      
+      // Generate random positions
+      const randomTop = Math.random() * (bodyHeight - button.offsetHeight); // Prevent going out of the screen vertically
+      const randomLeft = Math.random() * (bodyWidth - button.offsetWidth); // Prevent going out of the screen horizontally
+
+      // Set the new position
+      button.style.position = 'absolute'; // Use absolute positioning
+      button.style.top = randomTop + 'px';
+      button.style.left = randomLeft + 'px';
+    }
+    function changemessage(){
+      document.querySelector('#message .text-center').innerHTML = "Take a look at it madam!";
+      document.getElementById('buttons').style.display = 'none';
+      setTimeout(changepage, 3000); // Replace with the actual page URL
+    }
+
+    // Attach the event listener for hover
+    const noButton = document.getElementById('noButton');
+    const yesButton = document.getElementById('yesButton');
+    yesButton.addEventListener('click', changemessage);
+    noButton.addEventListener('mouseover', moveButtonRandomly);
+  </script>
+</body>
+</html>
