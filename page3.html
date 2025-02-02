@@ -1,11 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS for animation -->
+    <style>
+        /* Keyframe for typing effect */
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Keyframe for the blinking caret */
+        @keyframes blink {
+            0%, 100% {
+                border-color: transparent;
+            }
+            50% {
+                border-color: black;
+            }
+        }
+
+        /* Apply the typing animation */
+        .typing-text {
+            overflow: hidden;
+            white-space: normal;  /* Allow text to wrap */
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            border-right: 2px solid transparent; /* Adds the caret */
+            animation: typing 0s steps(1) 1s forwards; /* Default duration, will be overridden */
+        }
+
+        /* Apply the blinking caret animation */
+        .caret {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            margin-left: 4px;
+            border-left: 2px solid transparent;
+            animation: blink 0.7s step-end infinite;
+        }
+
+        /* Slightly transparent white background for the message box */
+        #message {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 6px;
+            width: 80%;  /* Adjusted for smaller screens */
+            max-width: 90%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;  /* Allow it to expand vertically */
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            animation: fadeIn 1s ease-in-out forwards;
+            height: auto; /* Allows the height to adjust as content grows */
+        }
+
+        /* Fade-in effect for message box */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
-<body>
-  <h1>I Love you so much</h1>
+<body class="bg-cover bg-center h-screen flex items-center justify-center relative" style="background-image: url('Resources/moonbg.jpg');">
+    <div id="message">
+        <div class="text-2xl font-bold text-center">
+            <!-- Empty text span to show the typing animation -->
+            <span id="typing-text">Once again Happy Birthday to you! Hasini 🎉🎂 , Meeting you is a canonical event in my life and really I am so happy that I met a person like you and had got a chance to be friends with you, I still admit I won’t find another person like you in my next 4 years and I would like to say to you that every moment when I speak with you, I am so happy.</span>
+            <span class="caret"></span>
+        </div>
+    </div>
+
+    <!-- JavaScript to calculate typing time -->
+    <script>
+        window.onload = function() {
+            const message = document.getElementById('typing-text');
+            const caret = document.querySelector('.caret');
+            const text = message.textContent.trim();
+            const typingSpeed = 100; // Time in ms per character (slow typing speed)
+            let index = 0;
+
+            // Function to type each character one by one
+            function typeCharacter() {
+                if (index < text.length) {
+                    message.textContent = text.substring(0, index + 1);
+                    index++;
+                    setTimeout(typeCharacter, typingSpeed); // Call itself to type the next character
+                }
+            }
+
+            // Start typing after the page loads
+            typeCharacter();
+            
+            // Show the caret after typing is almost done
+            setTimeout(() => {
+                caret.style.display = 'inline-block';
+            }, (text.length * typingSpeed) - 500); // Start blinking after typing is near complete
+        }
+    </script>
 </body>
 </html>
