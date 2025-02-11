@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Countdown 🎉</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: white;
+        }
+
+        .countdown-container {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            box-shadow: 0 0 20px rgba(255, 81, 47, 0.5);
+        }
+
+        .timer {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
+            100% { text-shadow: 0 0 20px rgba(255, 255, 255, 1); }
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #38ef7d, #11998e);
+            box-shadow: 0 4px 10px rgba(56, 239, 125, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(56, 239, 125, 0.5);
+        }
+    </style>
+
+    <script>
+        function startCountdown() {
+            const countdownDate = new Date(2025, 1, 14, 0, 0, 0).getTime();
+
+            const timer = setInterval(function() {
+                const currentTime = new Date().getTime();
+                const distance = Math.floor((countdownDate - currentTime) / 1000);
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById("timer").innerHTML = "00:00:00";
+                    document.getElementById("openButton").classList.remove("cursor-not-allowed");
+                    document.getElementById("openButton").classList.add("cursor-pointer");
+                    document.getElementById("openButton").disabled = false;
+                    return;
+                }
+
+                const totalHours = Math.floor(distance / 3600);
+                const minutes = Math.floor((distance % 3600) / 60);
+                const seconds = distance % 60;
+
+                document.getElementById("timer").innerHTML =
+                    `${totalHours}h ${String(minutes).padStart(2, "0")}m ${String(seconds).padStart(2, "0")}s`;
+
+            }, 1000);
+        }
+
+        window.onload = startCountdown;
+    </script>
+</head>
+<body class="h-screen flex items-center justify-center">
+
+    <div class="countdown-container text-center text-white p-10 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-4xl mb-4 font-extrabold">🎁 A Special Surprise! 🎉</h1>
+        <p class="text-lg mb-6">Time remaining until your special day:</p>
+        <div id="timer" class="timer text-5xl font-bold mb-6">Loading...</div>
+        <a href="index.html" id="openButton" 
+           class="btn text-white px-6 py-3 rounded-full text-lg font-bold transition-all cursor-not-allowed disabled:opacity-50" 
+           onclick="this.disabled = true; return false;" disabled>
+            Open Surprise 🎈
+        </a>
+    </div>
+
+</body>
+</html>
